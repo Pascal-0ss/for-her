@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playlist</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(to bottom, #f8f4f0, #efe7df);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.playlist-card {
+  background: white;
+  width: 520px;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.playlist-title h2 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.playlist-title p {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Album */
+.album {
+  margin: 20px 0;
+}
+
+.album img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  animation: glow 4s ease-in-out infinite;
+}
+
+/* Song info */
+.song-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.song-info p {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #777;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin: 20px 0;
+}
+
+.controls button {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #444;
+}
+
+.controls button:hover {
+  color: #d8b4a0;
+}
+
+audio {
+  width: 100%;
+}
+
+/* Navigation */
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.nav a {
+  text-decoration: none;
+  padding: 8px 20px;
+  background: #d8b4a0;
+  color: white;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* Hearts */
+.hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hearts span {
+  position: absolute;
+  bottom: -50px;
+  font-size: 20px;
+  animation: floatHearts 12s linear infinite;
+  opacity: 0.4;
+}
+
+.hearts span:nth-child(1){left:10%}
+.hearts span:nth-child(2){left:20%;animation-delay:2s}
+.hearts span:nth-child(3){left:30%;animation-delay:4s}
+.hearts span:nth-child(4){left:40%;animation-delay:1s}
+.hearts span:nth-child(5){left:50%;animation-delay:3s}
+.hearts span:nth-child(6){left:60%;animation-delay:5s}
+.hearts span:nth-child(7){left:70%;animation-delay:2s}
+.hearts span:nth-child(8){left:80%;animation-delay:4s}
+.hearts span:nth-child(9){left:90%;animation-delay:6s}
+
+@keyframes floatHearts {
+  0% {transform:translateY(0);opacity:0}
+  10% {opacity:.4}
+  100% {transform:translateY(-110vh);opacity:0}
+}
+
+@keyframes glow {
+  0%,100%{box-shadow:0 10px 25px rgba(0,0,0,0.2)}
+  50%{box-shadow:0 15px 35px rgba(216,180,160,0.6)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="hearts">
+  <span>💗</span><span>💖</span><span>💕</span><span>💗</span><span>💞</span>
+  <span>💖</span><span>💗</span><span>💕</span><span>💞</span>
+</div>
+
+<div class="playlist-card">
+
+  <div class="playlist-title">
+    <h2>Playlist</h2>
+    <p>Songs that remind me of you</p>
+  </div>
+
+  <div class="album">
+    <img id="cover" src="images/song1.jpg">
+  </div>
+
+  <div class="song-info">
+    <h3 id="title">Your Universe</h3>
+    <p id="artist">Rico Blanco</p>
+  </div>
+
+  <div class="controls">
+    <button onclick="prevSong()">⏮</button>
+    <button onclick="playPause()">⏯</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+
+  <audio id="player" src="music/song1.mp3"></audio>
+
+  <p style="font-size:.8rem;color:#999;text-align:center">
+    I picked these songs thinking of you 🤍
+  </p>
+
+  <div class="nav">
+    <a href="letter.html">← Back</a>
+    <a href="flower.html">Next →</a>
+  </div>
+
+</div>
+
+<script>
+const songs = [
+  {
+    title: "Your Universe",
+    artist: "Rico Blanco",
+    src: "music/song1.mp3",
+    cover: "images/song1.jpg"
+  },
+  {
+    title: "Di Nakakasawa",
+    artist: "Arthur Nery",
+    src: "music/song2.mp3",
+    cover: "images/song2.jpg"
+  },
+  {
+    title: "About You",
+    artist: "The 1975",
+    src: "music/song3.mp3",
+    cover: "images/song3.jpg"
+  },
+  {
+    title: "Coffee",
+    artist: "Miguel",
+    src: "music/song4.mp3",
+    cover: "images/song4.jpg"
+  },
+  {
+    title: "Sesame Syrup",
+    artist: "Cigarettes After Sex",
+    src: "music/song5.mp3",
+    cover: "images/song5.jpg"
+  }
+];
+
+let current = 0;
+const player = document.getElementById("player");
+const cover = document.getElementById("cover");
+const title = document.getElementById("title");
+const artist = document.getElementById("artist");
+
+function loadSong(index){
+  current = index;
+  player.src = songs[index].src;
+  cover.src = songs[index].cover;
+  title.textContent = songs[index].title;
+  artist.textContent = songs[index].artist;
+
+  player.load();
+  player.play().catch(() => {
+    console.log("Autoplay blocked, user interaction required.");
+  });
+}
+
+
+function playPause(){
+  player.paused ? player.play() : player.pause();
+}
+
+function nextSong(){
+  loadSong((current + 1) % songs.length);
+}
+
+function prevSong(){
+  loadSong((current - 1 + songs.length) % songs.length);
+}
+
+player.addEventListener("ended", () => {
+  nextSong();
+});
+
+</script>
+
+
+
+</body>
+</html>

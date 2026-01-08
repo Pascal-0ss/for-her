@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For You</title>
+
+  <style>
+    
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(to bottom, #f8f4f0, #efe7df);
+      color: #3b3b3b;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    a {
+      display: inline-block;
+      margin-top: 40px;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 25px;
+      background: #d8b4a0;
+      color: white;
+    }
+
+    .back-btn {
+  display: inline-block;
+  margin-bottom: 30px;
+  text-decoration: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: #d8b4a0;
+  color: white;
+  font-size: 0.9rem;
+}
+
+.fade-in {
+  animation: fadeSlide 1.4s ease forwards;
+}
+
+@keyframes fadeSlide {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hearts span {
+  position: absolute;
+  bottom: -50px;
+  font-size: 20px;
+  animation: floatHearts 12s linear infinite;
+  opacity: 0.4;
+}
+
+.hearts span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.hearts span:nth-child(2) { left: 20%; animation-delay: 2s; }
+.hearts span:nth-child(3) { left: 30%; animation-delay: 4s; }
+.hearts span:nth-child(4) { left: 40%; animation-delay: 1s; }
+.hearts span:nth-child(5) { left: 50%; animation-delay: 3s; }
+.hearts span:nth-child(6) { left: 60%; animation-delay: 5s; }
+.hearts span:nth-child(7) { left: 70%; animation-delay: 2s; }
+.hearts span:nth-child(8) { left: 80%; animation-delay: 4s; }
+.hearts span:nth-child(9) { left: 90%; animation-delay: 6s; }
+
+@keyframes floatHearts {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% { opacity: 0.4; }
+  100% {
+    transform: translateY(-110vh) scale(1.4);
+    opacity: 0;
+  }
+}
+
+
+  </style>
+  
+
+</head>
+
+<body>
+
+  <div class="hearts">
+  <span>💗</span><span>💖</span><span>💕</span><span>💗</span><span>💞</span>
+  <span>💖</span><span>💗</span><span>💕</span><span>💞</span><span>💖</span>
+</div>
+
+  <div class="container fade-in">
+    <h1>Hi, Mz. Rapunzel</h1>
+
+    <div class="card">
+      <h2>
+        Some people are sunlight in human form.
+      </h2>
+      <h2>You are one of them.</h2>
+      <h3>Without knowing it, you soften days, brighten quiet moments, and leave warmth where there was none before. This is not a confession or a request, I just want to leave this here because some truths deserve to be said even when no name attached. You matter more than you probably realize.</h3>
+      <p>💗 💗 💗</p>
+    </div>
+
+    <a href="letter.html">Next →</a>
+  </div>
+  <p style="text-align:center; font-size:0.75rem; color:#aaa; margin-top:20px;">
+  Made with honesty 💗
+</p>
+
+</body>
+</html>

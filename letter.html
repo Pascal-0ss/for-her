@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>A Letter</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background: linear-gradient(to bottom, #f8f4f0, #efe7df);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .scene {
+      position: relative;
+      width: 340px;
+      text-align: center;
+    }
+
+    .hint {
+      margin-bottom: 14px;
+      color: #6b4f4f;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    /* Envelope */
+    .envelope {
+      width: 300px;
+      height: 190px;
+      background: #e6cfc1;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      position: relative;
+      cursor: pointer;
+    }
+
+    .flap {
+      position: absolute;
+      inset: 0;
+      background: #d8b4a0;
+      clip-path: polygon(0 0, 50% 60%, 100% 0);
+      transform-origin: top;
+      transition: transform 0.8s ease;
+      z-index: 3;
+    }
+
+    .heart-seal {
+      position: absolute;
+      bottom: 45px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 26px;
+      z-index: 4;
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+
+    /* Letter preview */
+    .letter-preview {
+      position: absolute;
+      bottom: -120%;
+      left: 15px;
+      width: 270px;
+      background: white;
+      padding: 16px;
+      border-radius: 6px;
+      transition: bottom 1s ease;
+      z-index: 2;
+      font-size: 0.9rem;
+    }
+
+    .envelope.open .letter-preview {
+      bottom: 10px;
+    }
+
+    /* Scrollable Letter Box */
+    .letter-box {
+      position: absolute;
+      top: -40px;
+      left: -30px;
+      width: 400px;
+      height: 320px;
+      background: #ffffffee;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      display: none;
+      z-index: 10;
+      animation: fadeUp 1.2s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .letter-box p {
+      margin-bottom: 18px;
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
+
+    .btn {
+      padding: 8px 18px;
+      border-radius: 20px;
+      background: #d8b4a0;
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hearts span {
+  position: absolute;
+  bottom: -50px;
+  font-size: 20px;
+  animation: floatHearts 12s linear infinite;
+  opacity: 0.4;
+}
+
+.hearts span:nth-child(1) { left: 10%; animation-delay: 0s; }
+.hearts span:nth-child(2) { left: 20%; animation-delay: 2s; }
+.hearts span:nth-child(3) { left: 30%; animation-delay: 4s; }
+.hearts span:nth-child(4) { left: 40%; animation-delay: 1s; }
+.hearts span:nth-child(5) { left: 50%; animation-delay: 3s; }
+.hearts span:nth-child(6) { left: 60%; animation-delay: 5s; }
+.hearts span:nth-child(7) { left: 70%; animation-delay: 2s; }
+.hearts span:nth-child(8) { left: 80%; animation-delay: 4s; }
+.hearts span:nth-child(9) { left: 90%; animation-delay: 6s; }
+
+@keyframes floatHearts {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% { opacity: 0.4; }
+  100% {
+    transform: translateY(-110vh) scale(1.4);
+    opacity: 0;
+  }
+}
+
+.letter-box {
+  animation: floatPaper 6s ease-in-out infinite;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2),
+              0 0 30px rgba(216,180,160,0.4);
+}
+
+@keyframes floatPaper {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+
+  </style>
+</head>
+
+<body>
+
+ 
+
+  <div class="hearts">
+  <span>💗</span><span>💖</span><span>💕</span><span>💗</span><span>💞</span>
+  <span>💖</span><span>💗</span><span>💕</span><span>💞</span><span>💖</span>
+</div>
+
+<div class="scene">
+  <div class="hint">Click the envelope 💌</div>
+
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="heart-seal">❤️</div>
+    <div class="letter-preview">
+      <strong>For someone I really admire.</strong>
+    </div>
+  </div>
+
+  <!-- Scrollable Letter -->
+  <div class="letter-box" id="letterBox">
+    <h3>For someone I really admire.</h3>
+
+    <p>
+        I've been holding something big inside me for a while—the feelings I thought I could change.
+        Over the past few years, it’s still been you.
+      </p>
+
+      <p>
+        At some point in our lives, we were happy… together.
+        We shared experiences, and we knew how to make each other happy.
+        But there came a time when everything changed.
+      </p>
+
+      <p>
+        We lost contact for so many years—three years.
+        I thought I could get over you.
+        I tried to love someone else, but all I could think about was you.
+        I tried to stop my feelings, but in the end, I still lost.
+      </p>
+
+      <p>
+        That’s when I finally realized that no matter what happened, it would still be you.
+        It was always you.
+      </p>
+
+      <p>
+        In those three years, I tried to figure myself out.
+        I learned, I grew, and I changed in ways I never expected.
+        I was so unsure about my feelings.
+      </p>
+
+      <p>
+        Yet through all of that, the thought of you never really left.
+        I don’t know what the future holds, and I’m not asking for anything more than honesty.
+        I just wanted you to know the truth I’ve been carrying—because some feelings don’t fade with time;
+        they just wait to be understood.
+      </p>
+
+      <p>
+        Even after all this time, a part of me believes that some connections are rare and meaningful.
+        Maybe we crossed paths again for a reason, or maybe this is just the closure I needed.
+      </p>
+
+      <p>
+        Either way, I’m grateful for what we once had and for what it taught me.
+        I’m not here to reopen old wounds or change the past.
+        I wanted to be better for the future.
+        You mattered to me—and in many ways, you still do.
+      </p>
+
+      <p>You are something special to me. You make my days brighter than ever. You'll always have a space within me.</p>
+      <p>Taking things slow is what I want. Even miles apart, I feel every smile, every word, every little things you do. I want to savor this, to let it grow naturally, without rushing, without pressure. Because you make ordinary days brighter, and I don't want to miss a single moment of this quiet connection we share, even from across the world.</p>
+
+    <div class="buttons">
+      <a href="index.html" class="btn">← Back</a>
+      <a href="playlist.html" class="btn">Next →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const envelope = document.getElementById("envelope");
+  const letterBox = document.getElementById("letterBox");
+
+  envelope.addEventListener("click", () => {
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+      letterBox.style.display = "block";
+    }, 900);
+  });
+</script>
+
+
+
+</body>
+</html>
